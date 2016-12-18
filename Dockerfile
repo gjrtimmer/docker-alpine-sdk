@@ -1,4 +1,4 @@
-FROM registry.timmertech.nl/docker/alpine-base:latest
+FROM alpine:3.4
 MAINTAINER G.J.R. Timmer <gjr.timmer@gmail.com>
 
 ARG BUILD_DATE
