@@ -39,7 +39,8 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 	echo "apk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	mkdir -p /var/cache/distfiles && \
-	chmod a+w /var/cache/distfiles
+	chgrp abuild /var/cache/distfiles && \
+	chmod g+w /var/cache/distfiles
 
 COPY ./init /init
 VOLUME ["/home/apk/data"]
