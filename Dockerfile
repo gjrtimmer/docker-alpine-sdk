@@ -31,7 +31,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 	passwd --delete apk && \
 	echo "apk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
-	addgroup sdk abuild && \
+	addgroup apk abuild && \
 	mkdir -p /var/cache/distfiles && \
 	chgrp abuild /var/cache/distfiles && \
 	chmod g+w /var/cache/distfiles && \
