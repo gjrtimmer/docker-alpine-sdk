@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# Container Exit
+cexit() {
+	echo 'Container Terminated'
+	exit 0
+}
+
 USER=apk
 DATA=/home/apk/data
 
@@ -23,12 +29,6 @@ if [[ ${APK_UID} != ${USERMAP_UID} ]] || [[ ${APK_GID} != ${USERMAP_GID} ]]; the
 	sed -i -e "s|:${USERMAP_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
 	usermod -s /bin/bash ${USER}
 fi
-
-# Container Exit
-cexit() {
-	echo 'Container Terminated'
-	exit 0
-}
 
 # If not mounted, create data directory
 if [ ! -d ${DATA} ]; then
