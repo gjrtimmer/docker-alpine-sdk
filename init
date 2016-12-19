@@ -13,7 +13,6 @@ cexit() {
 if [ ! -d ${DATA} ]; then
 	sudo -HEu apk mkdir -p ${DATA}
 else 
-	whoami
 	sudo chown apk:abuild ${DATA}
 fi
 
@@ -32,9 +31,9 @@ fi
 
 if [ ! -d ${DATA}/.apk ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.apk
-	cp -ra /etc/apk/keys ${DATA}/.apk
-	rm -f /etc/apk/keys
-	ln -s ${DATA}/.apk/keys /etc/apk/keys
+	sudo cp -ra /etc/apk/keys ${DATA}/.apk
+	sudo rm -rf /etc/apk/keys
+	sudo ln -s ${DATA}/.apk/keys /etc/apk/keys
 fi
 
 if [ ! -d ${DATA}/.abuild ]; then
@@ -44,8 +43,8 @@ fi
 
 if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	cp /etc/abuild.conf ${DATA}/.abuild/abuild.conf
-	rm -f /etc/abuild.conf
-	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
+	sudo rm -f /etc/abuild.conf
+	sudo ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 fi
 
 if [ ! -d ${DATA}/aports ]; then
