@@ -18,6 +18,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 		bash \
 		bash-completion \
 		ca-certificates \
+		shadow \
 		wget \
 		curl \
 		git \

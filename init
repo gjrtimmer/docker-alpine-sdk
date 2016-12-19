@@ -3,6 +3,27 @@
 USER=apk
 DATA=/home/apk/data
 
+USERMAP_UID=${USERMAP_UID:-apk}
+USERMAP_GID=${USERMAP_GID:-abuild}
+
+if [[ $USERMAP_UID != *[[:digit:]]* ]]; then
+	USERMAP_UID=$(id -u $USERMAP_UID)
+fi
+
+if [[ $USERMAP_GID != *[[:digit:]]* ]]; then
+	USERMAP_GID=$(id -g $USERMAP_GID)
+fi
+
+APK_GID=${APK_GID:-${APK_UID:-$USERMAP_GID}}
+APK_UID=${APK_UID:-$USERMAP_UID}
+
+if [[ ${APK_UID} != ${USERMAP_UID} ]] || [[ ${APK_GID} != ${USERMAP_GID} ]]; then
+	echo "  Adapting uid and gid for ${USER}:abuild to $APK_UID:$APK_GID"
+	groupmod -o -g ${APK_GID} ${USER}
+	sed -i -e "s|:${USERMAP_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
+	usermod -s /bin/bash ${USER}
+fi
+
 # Container Exit
 cexit() {
 	echo 'Container Terminated'
