@@ -44,3 +44,4 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 COPY ./init /init
 VOLUME ["/home/apk/data"]
 CMD /init
+USER apk
