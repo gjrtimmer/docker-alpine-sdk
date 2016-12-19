@@ -32,7 +32,8 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 	chmod 600 /etc/sudoers.d/apk && \
 	mkdir -p /var/cache/distfiles && \
 	chgrp abuild /var/cache/distfiles && \
-	chmod g+w /var/cache/distfiles
+	chmod g+w /var/cache/distfiles && \
+	chown -R apk:abuild /var/cache/distfiles
 
 COPY ./init /init
 VOLUME ["/home/apk/data"]
