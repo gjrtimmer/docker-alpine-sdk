@@ -6,6 +6,7 @@ cexit() {
 	exit 0
 }
 
+TERM=xterm
 DATA=/home/apk/data
 
 USERMAP_ORIG_UID=$(id -u apk)
