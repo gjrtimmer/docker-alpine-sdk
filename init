@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Container Exit
 cexit() {
@@ -25,21 +25,21 @@ APK_GID=${APK_GID:-${APK_UID:-$USERMAP_GID}}
 APK_UID=${APK_UID:-$USERMAP_UID}
 
 if [[ ${APK_UID} != ${USERMAP_ORIG_UID} ]] || [[ ${APK_GID} != ${USERMAP_ORIG_GID} ]]; then
-	echo "  Adapting uid and gid for apk:abuild to ${APK_UID}:${APK_GID}"
+	echo "Adapting uid and gid for apk:abuild to ${APK_UID}:${APK_GID}"
 	sudo groupmod -o -g ${APK_GID} abuild
 	sudo sed -i -e "s|:${USERMAP_ORIG_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
 	sudo usermod -s /bin/bash apk
 fi
 
 # If not mounted, create data directory
-if [ ! -d ${DATA} ]; then
+if [[ ! -d ${DATA} ]]; then
 	sudo -HEu apk mkdir -p ${DATA}
 else 
 	sudo chown apk:abuild ${DATA}
 fi
 
 # Failsafe check, should never run
-if [ -d /home/apk/.ssh ]; then
+if [[ -d /home/apk/.ssh ]] && [[ ! -L /home/apk/.ssh ]]; then
 	# .ssh already exists, weird...
 	# Move to data and create symbolic link
 	mv /home/apk/.ssh ${DATA}
