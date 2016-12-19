@@ -21,6 +21,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 		bash-completion \
 		ca-certificates \
 		shadow \
+		openssh-client \
 		wget \
 		curl \
 		git \
