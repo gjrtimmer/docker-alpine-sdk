@@ -49,10 +49,19 @@ fi
 if [ ! -d ${DATA}/.ssh ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.ssh
 	ln -s /home/apk/data/.ssh /home/apk/.ssh
+else 
+	if [[ ! -L /home/apk/.ssh ]]; then
+		ln -s /home/apk/data/.ssh /home/apk/.ssh
+	fi 
 fi
+
 
 if [ ! -d ${DATA}/.apk ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.apk
+	cp -fra /etc/apk/keys ${DATA}/.apk/
+	rm -rf /etc/apk/keys
+	ln -s ${DATA}/.apk/keys /etc/apk/keys
+else
 	cp -ra /etc/apk/keys ${DATA}/.apk/
 	rm -rf /etc/apk/keys
 	ln -s ${DATA}/.apk/keys /etc/apk/keys
@@ -61,10 +70,19 @@ fi
 if [ ! -d ${DATA}/.abuild ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.abuild
 	ln -s /home/apk/data/.abuild /home/apk/.abuild
+else 
+	if [[ ! -L /home/apk/.abuild ]]; then
+		ln -s /home/apk/data/.abuild /home/apk/.abuild
+	fi
 fi
 
 if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	cp /etc/abuild.conf ${DATA}/.abuild/abuild.conf
+	rm -f /etc/abuild.conf
+	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
+	chown apk:build /etc/abuild.conf
+	chmod 660 /etc/abuild.conf
+else
 	rm -f /etc/abuild.conf
 	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 	chown apk:build /etc/abuild.conf
