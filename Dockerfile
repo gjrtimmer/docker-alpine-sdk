@@ -27,6 +27,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 		alpine-sdk \
 		readline && \
 	adduser -D -s /bin/bash -G abuild apk && \
+	passwd --delete apk && \
 	echo "apk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	mkdir -p /var/cache/distfiles && \
