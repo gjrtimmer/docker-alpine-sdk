@@ -9,6 +9,11 @@ cexit() {
 	exit 0
 }
 
+# If not mounted, create data directory
+if [ ! -d ${DATA} ]; then
+	sudo -HEu apk mkdir -p ${DATA}
+fi
+
 # Failsafe check, should never run
 if [ -d /home/apk/.ssh ]; then
 	# .ssh already exists, weird...
@@ -22,6 +27,13 @@ if [ ! -d ${DATA}/.ssh ]; then
 	ln -s /home/apk/data/.ssh /home/apk/.ssh
 fi
 
+if [ ! -d ${DATA}/.apk ]; then
+	sudo -HEu apk mkdir -p ${DATA}/.apk
+	cp /etc/apk/keys ${DATA}/.apk
+	rm -f /etc/apk/keys
+	ln -s ${DATA}/.apk/keys /etc/apk/keys
+fi
+
 if [ ! -d ${DATA}/.abuild ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.abuild
 	ln -s /home/apk/data/.abuild /home/apk/.abuild
@@ -29,9 +41,11 @@ fi
 
 if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	cp /etc/abuild.conf ${DATA}/.abuild/abuild.conf
-	rm /etc/abuild.conf
+	rm -f /etc/abuild.conf
 	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 fi
+
+if [ ! ]
 
 trap cexit TERM
 
