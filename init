@@ -26,19 +26,16 @@ APK_UID=${APK_UID:-$USERMAP_UID}
 
 if [[ ${APK_UID} != ${USERMAP_ORIG_UID} ]] || [[ ${APK_GID} != ${USERMAP_ORIG_GID} ]]; then
 	echo "Adapting uid and gid for apk:abuild to ${APK_UID}:${APK_GID}"
-	sudo groupmod -o -g ${APK_GID} abuild
-	su - apk
-	sudo sed -i -e "s|:${USERMAP_ORIG_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
-	su - apk
-	sudo usermod -s /bin/bash apk
-	su - apk
+	groupmod -o -g ${APK_GID} abuild
+	sed -i -e "s|:${USERMAP_ORIG_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
+	usermod -s /bin/bash apk
 fi
 
 # If not mounted, create data directory
 if [[ ! -d ${DATA} ]]; then
 	sudo -HEu apk mkdir -p ${DATA}
 else 
-	sudo chown apk:abuild ${DATA}
+	chown apk:abuild ${DATA}
 fi
 
 # Failsafe check, should never run
@@ -56,9 +53,9 @@ fi
 
 if [ ! -d ${DATA}/.apk ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.apk
-	sudo cp -ra /etc/apk/keys ${DATA}/.apk/
-	sudo rm -rf /etc/apk/keys
-	sudo ln -s ${DATA}/.apk/keys /etc/apk/keys
+	cp -ra /etc/apk/keys ${DATA}/.apk/
+	rm -rf /etc/apk/keys
+	ln -s ${DATA}/.apk/keys /etc/apk/keys
 fi
 
 if [ ! -d ${DATA}/.abuild ]; then
@@ -68,15 +65,15 @@ fi
 
 if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	cp /etc/abuild.conf ${DATA}/.abuild/abuild.conf
-	sudo rm -f /etc/abuild.conf
-	sudo ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
+	rm -f /etc/abuild.conf
+	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 fi
 
 if [ ! -d ${DATA}/aports ]; then
-	git clone git://git.alpinelinux.org/aports ${DATA}/aports &
+	sudo -HEu apk git clone git://git.alpinelinux.org/aports ${DATA}/aports &
 else 
 	cd ${DATA}/aports
-	git pull origin master
+	sudo -HEu apk git pull origin master
 fi
 
 trap cexit TERM
