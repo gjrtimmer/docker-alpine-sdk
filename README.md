@@ -11,4 +11,6 @@ Alpine SDk for building packages
 | Info | Details |
 |------|---------|
 | VOLUME | /home/apk/data |
+| USERMAP_UID | Map 'apk' user to UID |
+| USERMAP_GID | Map 'abuild' group to GID |
 
