@@ -6,7 +6,6 @@ cexit() {
 	exit 0
 }
 
-export TERM=xterm
 DATA=/home/apk/data
 
 USERMAP_ORIG_UID=$(id -u apk)
@@ -27,7 +26,7 @@ APK_UID=${APK_UID:-$USERMAP_UID}
 
 if [[ ${APK_UID} != ${USERMAP_ORIG_UID} ]] || [[ ${APK_GID} != ${USERMAP_ORIG_GID} ]]; then
 	echo "Adapting uid and gid for apk:abuild to ${APK_UID}:${APK_GID}"
-	sed -i -e "s|:${USERMAP_ORIG_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
+	sed -i -e "s|:${USERMAP_ORIG_UID}:${USERMAP_ORIG_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
 	usermod -s /bin/bash -G abuild apk
 fi
 
