@@ -82,12 +82,12 @@ if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	rm -f /etc/abuild.conf
 	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 	chown apk:build ${DATA}/.abuild/abuild.conf
-	chmod 775 ${DATA}/.abuild/abuild.conf
+	chmod 777 ${DATA}/.abuild/abuild.conf
 else
 	rm -f /etc/abuild.conf
 	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 	chown apk:build ${DATA}/.abuild/abuild.conf
-	chmod 775 ${DATA}/.abuild/abuild.conf
+	chmod 777 ${DATA}/.abuild/abuild.conf
 fi
 
 if [ ! -d ${DATA}/aports ]; then
