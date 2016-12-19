@@ -90,6 +90,11 @@ else
 	chmod 777 ${DATA}/.abuild/abuild.conf
 fi
 
+if [[ ! -f /home/apk/.gitconfig ]]; then
+	git config --global user.name ${GIT_USER}
+	git config --global user.email ${GIT_EMAIL}
+fi
+
 if [[ ! -d ${DATA}/aports ]]; then
 	sudo -HEu apk git clone ${REPO_URL} ${DATA}/aports
 	cd ${DATA}/aports
