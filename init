@@ -75,7 +75,7 @@ if [ ! -d ${DATA}/aports ]; then
 	sudo -HEu apk git clone git://git.alpinelinux.org/aports ${DATA}/aports &
 else 
 	cd ${DATA}/aports
-	sudo -HEu apk git pull origin master
+	sudo -HEu apk git pull origin master &
 fi
 
 trap cexit TERM
