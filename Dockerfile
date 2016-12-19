@@ -13,6 +13,7 @@ LABEL \
 	nl.timmertech.license=MIT
 
 RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories && \
+	echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories && \
 	apk upgrade --update --no-cache && \
 	apk add --update --no-cache \
 		bash \
