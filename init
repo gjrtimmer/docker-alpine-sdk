@@ -90,11 +90,22 @@ else
 fi
 
 if [ ! -d ${DATA}/aports ]; then
-	sudo -HEu apk git clone git://git.alpinelinux.org/aports ${DATA}/aports &
+	sudo -HEu apk git clone ${REPO_URL} ${DATA}/aports
+	cd ${DATA}/aports
+	sudo -HEu apk git fetch upstream
+	sudo -HEu apk git checkout master
+	sudo -HEu apk git merge upstream/master
+	sudo -HEu apk git push origin master
 else 
 	cd ${DATA}/aports
-	sudo -HEu apk git pull origin master &
+	sudo -HEu apk git fetch upstream
+	sudo -HEu apk git checkout master
+	sudo -HEu apk git merge upstream/master
+	sudo -HEu apk git push origin master
 fi
+
+# Upgrade Image
+apk upgrade --update-cache --no-cache --available
 
 trap cexit TERM
 

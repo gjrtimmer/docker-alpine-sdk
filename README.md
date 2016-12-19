@@ -13,4 +13,5 @@ Alpine SDk for building packages
 | VOLUME | /home/apk/data |
 | USERMAP_UID | Map 'apk' user to UID |
 | USERMAP_GID | Map 'abuild' group to GID |
+| REPO_URL | Own github fork of aports git |
 
