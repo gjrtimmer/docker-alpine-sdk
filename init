@@ -119,6 +119,18 @@ fi
 # Upgrade Image
 apk upgrade --update-cache --no-cache --available
 
+if [[ ! -f /etc/profile.d/term.sh ]]; then
+	echo 'export TERM=xterm' > /etc/profile.d/term.sh
+fi
+
+if [[ ! -f /etc/profile.d/data.sh ]]; then
+	echo 'export DATA=/home/apk/data' > /etc/profile.d/data.sh
+fi
+
+if [[ ! -f /etc/profile.d/alias.sh ]]; then
+	echo "alias ll='ls -la'" > /etc/profile.d/alias.sh
+fi
+
 trap cexit TERM
 
 while true; do
