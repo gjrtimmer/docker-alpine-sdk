@@ -35,7 +35,8 @@ fi
 if [[ ! -d ${DATA} ]]; then
 	sudo -HEu apk mkdir -p ${DATA}
 else 
-	chown apk:abuild ${DATA}
+	chown -R apk:abuild ${DATA}
+	chmod 777 ${DATA}
 fi
 
 # Failsafe check, should never run
