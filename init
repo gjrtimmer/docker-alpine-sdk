@@ -54,7 +54,7 @@ fi
 
 if [ ! -d ${DATA}/.apk ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.apk
-	sudo cp -ra /etc/apk/keys ${DATA}/.apk
+	sudo cp -ra /etc/apk/keys ${DATA}/.apk/
 	sudo rm -rf /etc/apk/keys
 	sudo ln -s ${DATA}/.apk/keys /etc/apk/keys
 fi
