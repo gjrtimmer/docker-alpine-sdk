@@ -26,7 +26,7 @@ APK_UID=${APK_UID:-$USERMAP_UID}
 if [[ ${APK_UID} != ${USERMAP_UID} ]] || [[ ${APK_GID} != ${USERMAP_GID} ]]; then
 	echo "  Adapting uid and gid for ${USER}:abuild to $APK_UID:$APK_GID"
 	sudo groupmod -o -g ${APK_GID} abuild
-	sed -i -e "s|:${USERMAP_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
+	sudo sed -i -e "s|:${USERMAP_UID}:${APK_GID}:|:${APK_UID}:${APK_GID}:|" /etc/passwd
 	sudo usermod -s /bin/bash ${USER}
 fi
 
