@@ -93,6 +93,7 @@ fi
 if [[ ! -d ${DATA}/aports ]]; then
 	sudo -HEu apk git clone ${REPO_URL} ${DATA}/aports
 	cd ${DATA}/aports
+	sudo -HEu apk git remote add upstream https://github.com/alpinelinux/aports.git
 	sudo -HEu apk git fetch upstream
 	sudo -HEu apk git checkout master
 	sudo -HEu apk git merge upstream/master
