@@ -12,6 +12,8 @@ cexit() {
 # If not mounted, create data directory
 if [ ! -d ${DATA} ]; then
 	sudo -HEu apk mkdir -p ${DATA}
+else 
+	chown apk:abuild ${DATA}
 fi
 
 # Failsafe check, should never run
@@ -29,7 +31,7 @@ fi
 
 if [ ! -d ${DATA}/.apk ]; then
 	sudo -HEu apk mkdir -p ${DATA}/.apk
-	cp /etc/apk/keys ${DATA}/.apk
+	cp -ra /etc/apk/keys ${DATA}/.apk
 	rm -f /etc/apk/keys
 	ln -s ${DATA}/.apk/keys /etc/apk/keys
 fi
