@@ -6,7 +6,6 @@ cexit() {
 	exit 0
 }
 
-USER=apk
 DATA=/home/apk/data
 
 USERMAP_ORIG_UID=$(id -u apk)
@@ -48,7 +47,7 @@ if [ -d /home/apk/.ssh ]; then
 fi
 
 if [ ! -d ${DATA}/.ssh ]; then
-	sudo -HEu ${USER} mkdir -p ${DATA}/.ssh
+	sudo -HEu apk mkdir -p ${DATA}/.ssh
 	ln -s /home/apk/data/.ssh /home/apk/.ssh
 fi
 
