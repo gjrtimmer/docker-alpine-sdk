@@ -45,7 +45,9 @@ if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
 	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
 fi
 
-if [ ! ]
+if [ ! -d ${DATA}/aports ]; then
+	git clone git://git.alpinelinux.org/aports ${DATA}/aports &
+fi
 
 trap cexit TERM
 
