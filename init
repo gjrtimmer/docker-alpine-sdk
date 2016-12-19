@@ -72,6 +72,9 @@ fi
 
 if [ ! -d ${DATA}/aports ]; then
 	git clone git://git.alpinelinux.org/aports ${DATA}/aports &
+else 
+	cd ${DATA}/aports
+	git pull origin master
 fi
 
 trap cexit TERM
