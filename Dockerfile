@@ -15,7 +15,7 @@ LABEL \
 RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories && \
 	echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories && \
 	echo 'http://nl.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
-	apk upgrade --update --no-cache && \
+	apk upgrade --update-cache --no-cache --available && \
 	apk add --update --no-cache \
 		bash \
 		bash-completion \
