@@ -13,7 +13,8 @@ cexit() {
 if [ ! -d ${DATA} ]; then
 	sudo -HEu apk mkdir -p ${DATA}
 else 
-	chown apk:abuild ${DATA}
+	whoami
+	sudo chown apk:abuild ${DATA}
 fi
 
 # Failsafe check, should never run

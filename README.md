@@ -8,7 +8,7 @@
 
 Alpine SDk for building packages
 
-| Info | - |
-|------|---|
+| Info | Details |
+|------|---------|
 | VOLUME | /home/apk/data |
 
