@@ -91,8 +91,13 @@ else
 fi
 
 if [[ ! -f /home/apk/.gitconfig ]]; then
+	touch ${DATA}/.gitconfig
+	ln -s /home/apk/data/.gitconfig /home/apk/.gitconfig
 	git config --global user.name ${GIT_USER}
 	git config --global user.email ${GIT_EMAIL}
+else 
+	rm /home/apk/.gitconfig
+	ln -s /home/apk/data/.gitconfig /home/apk/.gitconfig
 fi
 
 if [[ ! -d ${DATA}/aports ]]; then
