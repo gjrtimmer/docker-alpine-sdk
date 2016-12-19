@@ -7,3 +7,8 @@
 # docker/alpine-sdk
 
 Alpine SDk for building packages
+
+| Info | - |
+|------|---|
+| VOLUME | /home/apk/data |
+
