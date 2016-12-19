@@ -1,0 +1,43 @@
+#!/bin/sh
+
+USER=apk
+DATA=/home/apk/data
+
+# Container Exit
+cexit() {
+	echo 'Container Terminated'
+	exit 0
+}
+
+# Failsafe check, should never run
+if [ -d /home/apk/.ssh ]; then
+	# .ssh already exists, weird...
+	# Move to data and create symbolic link
+	mv /home/apk/.ssh ${DATA}
+	ln -s /home/apk/data/.ssh /home/apk/.ssh
+fi
+
+if [ ! -d ${DATA}/.ssh ]; then
+	sudo -HEu ${USER} mkdir -p ${DATA}/.ssh
+	ln -s /home/apk/data/.ssh /home/apk/.ssh
+fi
+
+if [ ! -d ${DATA}/.abuild ]; then
+	sudo -HEu apk mkdir -p ${DATA}/.abuild
+	ln -s /home/apk/data/.abuild /home/apk/.abuild
+fi
+
+if [ ! -f ${DATA}/.abuild/abuild.conf ]; then
+	cp /etc/abuild.conf ${DATA}/.abuild/abuild.conf
+	rm /etc/abuild.conf
+	ln -s ${DATA}/.abuild/abuild.conf /etc/abuild.conf
+fi
+
+trap cexit TERM
+
+while true; do
+	sleep 100 &
+	wait $!
+done
+
+# EOF

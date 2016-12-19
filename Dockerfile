@@ -40,5 +40,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 	chmod 600 /etc/sudoers.d/apk && \
 	mkdir -p /var/cache/distfiles && \
 	chmod a+w /var/cache/distfiles
-	
-VOLUME ["/build", "/home/apk/data"]
+
+COPY ./init /init
+VOLUME ["/home/apk/data"]
+CMD /init
