@@ -25,19 +25,7 @@ RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories &
 		curl \
 		git \
 		alpine-sdk \
-		readline \
-		perl \
-		perl-dev \
-		python \
-		python-dev \
-		tcl \
-		tcl-dev \
-		zlib-dev \
-		openssl-dev \
-		openldap-dev \
-		libedit-dev \
-		libxml2-dev \
-		util-linux-dev && \
+		readline && \
 	adduser -D -s /bin/bash -G abuild apk && \
 	echo "apk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
