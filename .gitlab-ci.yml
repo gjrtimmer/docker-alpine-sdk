@@ -3,19 +3,51 @@ stages:
   - deploy
   - clean
   
-build:
+build-master:
   stage: build
   tags: 
     - shell
   script:
-    - docker build --pull --force-rm=true --build-arg VCS_REF=`git rev-parse --short HEAD` --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH} .
+    - >
+        docker build --pull --force-rm=true 
+            --build-arg VCS_REF=`git rev-parse --short HEAD` 
+            --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
+            --build-arg GITHUB_USER=$(cat GITHUB_USER) 
+            --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:latest .
+  only:
+    - master
 
-deploy:
+build-branch:
+  stage: build
+  tags: 
+    - shell
+  script:
+    - >
+        docker build --pull --force-rm=true 
+            --build-arg VCS_REF=`git rev-parse --short HEAD` 
+            --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
+            --build-arg GITHUB_USER=$(cat GITHUB_USER) 
+            --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME} .
+  except:
+    - master
+
+deploy-master:
   stage: deploy
   tags:
     - shell
   script:
-    - docker push $(cat REPOSITORY)/${CI_PROJECT_PATH}
+    - docker push $(cat REPOSITORY)/${CI_PROJECT_PATH}:latest
+  only:
+    - master
+    
+deploy-branch:
+  stage: deploy
+  tags:
+    - shell
+  script:
+    - docker push $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}
+  except:
+    - master
 
 release:
   stage: deploy
@@ -32,5 +64,13 @@ clean:
   tags:
     - shell
   script:
-    - 'if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}) ]; then echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}"; docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}; fi'
-    - 'if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}) ]; then echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}"; docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}; fi'
+    - >
+        if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}) ]; then 
+            echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}"
+            docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}
+        fi
+    - >
+        if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}) ]; then 
+            echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}"
+            docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}; 
+        fi
