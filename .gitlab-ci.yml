@@ -8,12 +8,11 @@ build-master:
   tags: 
     - shell
   script:
-    - >
-        docker build --pull --force-rm=true 
-            --build-arg VCS_REF=`git rev-parse --short HEAD` 
-            --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-            --build-arg GITHUB_USER=$(cat GITHUB_USER) 
-            --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:latest .
+    - docker build --pull --force-rm=true 
+        --build-arg VCS_REF=`git rev-parse --short HEAD` 
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
+        --build-arg GITHUB_USER=$(cat GITHUB_USER) 
+        --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:latest .
   only:
     - master
 
@@ -22,12 +21,11 @@ build-branch:
   tags: 
     - shell
   script:
-    - >
-        docker build --pull --force-rm=true 
-            --build-arg VCS_REF=`git rev-parse --short HEAD` 
-            --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-            --build-arg GITHUB_USER=$(cat GITHUB_USER) 
-            --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME} .
+    - docker build --pull --force-rm=true 
+        --build-arg VCS_REF=`git rev-parse --short HEAD` 
+        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
+        --build-arg GITHUB_USER=$(cat GITHUB_USER) 
+        --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME} .
   except:
     - master
 
@@ -64,13 +62,9 @@ clean:
   tags:
     - shell
   script:
-    - >
-        if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}) ]; then 
-            echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}"
+    -   if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}) ]; then 
             docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}
         fi
-    - >
-        if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}) ]; then 
-            echo "Removing: $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}"
+    -   if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}) ]; then 
             docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}; 
         fi
