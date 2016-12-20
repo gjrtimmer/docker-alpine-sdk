@@ -8,4 +8,8 @@ else
     echo "sdk" | sudo -S cp ~/.abuild/*.pub /etc/apk/keys
 fi
 
-exec "$@"
+if [ -z "$@" ]; then
+	/bin/bash --login
+else 
+	exec "$@"
+fi
