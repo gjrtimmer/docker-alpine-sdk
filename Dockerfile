@@ -13,10 +13,7 @@ LABEL \
 	nl.timmertech.vcs-ref=${VCS_REF} \
 	nl.timmertech.license=MIT
 
-RUN echo 'http://nl.alpinelinux.org/alpine/edge/main' >> /etc/apk/repositories && \
-	echo 'http://nl.alpinelinux.org/alpine/edge/community' >> /etc/apk/repositories && \
-	echo 'http://nl.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories && \
-	apk update && \
+RUN apk update && \
 	apk add --update --no-cache \
 				bash \
 				bash-completion \
