@@ -8,8 +8,8 @@ else
     sudo cp ~/.abuild/*.pub /etc/apk/keys
 fi
 
-if [[ -z ${1} ]]; then
-	/bin/bash --login
+if [ -z "${1}" ]; then
+	exec /bin/bash --login
 else 
 	exec "$@"
 fi
