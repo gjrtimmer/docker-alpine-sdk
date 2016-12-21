@@ -3,7 +3,6 @@ MAINTAINER G.J.R. Timmer <gjr.timmer@gmail.com>
 
 ARG BUILD_DATE
 ARG VCS_REF
-ARG GITHUB_USER
 
 LABEL \
 	nl.timmertech.build-date=${BUILD_DATE} \
@@ -35,12 +34,6 @@ RUN apk update && \
 	mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh
 	
 USER sdk
-WORKDIR /tmp
-
-RUN git clone --recursive https://github.com/${GITHUB_USER}/aports.git && \
-	cd /tmp/aports && \
-	git remote add upstream https://github.com/alpinelinux/aports.git
-	
 WORKDIR /home/sdk
 
 COPY ./init /init

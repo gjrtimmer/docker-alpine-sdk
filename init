@@ -8,6 +8,12 @@ else
     sudo cp ~/.abuild/*.pub /etc/apk/keys
 fi
 
+if [ ! -d ~/aports ]; then
+	git clone --recursive https://github.com/${GITHUB_USER}/aports.git
+	cd ~/aports
+	git remote add upstream https://github.com/alpinelinux/aports.git
+fi
+
 if [ -z "${1}" ]; then
 	exec /bin/bash --login
 else 
