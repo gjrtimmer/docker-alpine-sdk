@@ -11,7 +11,6 @@ build-master:
     - docker build --pull --force-rm=true 
         --build-arg VCS_REF=`git rev-parse --short HEAD` 
         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-        --build-arg GITHUB_USER=$(cat GITHUB_USER) 
         --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:latest .
   only:
     - master
@@ -24,7 +23,6 @@ build-branch:
     - docker build --pull --force-rm=true 
         --build-arg VCS_REF=`git rev-parse --short HEAD` 
         --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-        --build-arg GITHUB_USER=$(cat GITHUB_USER) 
         --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME} .
   except:
     - master
