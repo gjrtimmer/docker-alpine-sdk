@@ -31,13 +31,19 @@ RUN apk update && \
 	echo "sdk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	chmod g+w /var/cache/distfiles/ && \
-	addgroup sdk abuild
+	addgroup sdk abuild && \
+	mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh
 	
 USER sdk
 WORKDIR /tmp
-RUN git clone --recursive https://github.com/${GITHUB_USER}/aports.git
+
+RUN git clone --recursive https://github.com/${GITHUB_USER}/aports.git && \
+	cd /tmp/aports && \
+	git remote add upstream https://github.com/alpinelinux/aports.git
+	
 WORKDIR /home/sdk
 
 COPY ./init /init
+COPY ./functions /etc/profile.d/functions.sh
 ENTRYPOINT ["/init"]
 CMD ["/bin/bash"]
