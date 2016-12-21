@@ -37,11 +37,9 @@ RUN apk update && \
 USER sdk
 WORKDIR /tmp
 
-RUN mkdir -p ~/.ssh && \
-	ssh-keyscan github.com > ~/.ssh/known_hosts && \
-	git clone --recursive git@github.com:${GITHUB_USER}/aports.git && \
+RUN git clone --recursive https://github.com/${GITHUB_USER}/aports.git && \
 	cd /tmp/aports && \
-	git remote add upstream git@github.com:alpinelinux/aports.git
+	git remote add upstream https://github.com/alpinelinux/aports.git
 	
 WORKDIR /home/sdk
 
