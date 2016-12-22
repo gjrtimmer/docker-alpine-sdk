@@ -8,12 +8,8 @@
 
 Alpine SDk for building packages
 
-| Info | Details |
-|------|---------|
-| VOLUME | /home/apk/data |
-| USERMAP_UID | Map 'apk' user to UID |
-| USERMAP_GID | Map 'abuild' group to GID |
-| REPO_URL | Own github fork of aports git |
-| GIT_USER | git user |
-| GIT_EMAIL | git email address |
+# Usage
 
+```bash
+docker run --name alpine-sdk --hosthome sdk -e GITHUB_USER=<GITHUB_USERNAME> -it datacore/alpine-sdk sh --login
+```
