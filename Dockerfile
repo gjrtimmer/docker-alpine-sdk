@@ -16,22 +16,13 @@ RUN apk update && \
 	apk add --update --no-cache \
 				bash \
 				bash-completion \
-				ca-certificates \
-				shadow \
-				openssh-client \
-				wget \
-				curl \
-				git \
-				alpine-sdk \
-				readline-dev && \
-	addgroup sdk && \
-	adduser  -G sdk -s /bin/bash -D sdk && \
+				alpine-sdk && \
+	adduser sdk && \
 	passwd --delete sdk && \
 	echo "sdk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	chmod g+w /var/cache/distfiles/ && \
-	addgroup sdk abuild && \
-	mv /etc/profile.d/color_prompt /etc/profile.d/color_prompt.sh
+	addgroup sdk abuild
 	
 USER sdk
 WORKDIR /home/sdk
