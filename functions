@@ -1,14 +1,5 @@
 #!/bin/bash
 
-update_aports() {
-	cd /tmp/aports
-	git fetch upstream
-	git checkout master
-	git merge upstream/master
-	git push origin master
-	cd -
-}
-
 build() {
 	abuild fetch
 	abuild unpack
@@ -21,7 +12,6 @@ build() {
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
 alias ls='ls --color=auto'
 alias ll='ls -la'
-alias updategit='update_aports'
 
 HISTFILE=/var/tmp/.bash_history
 HISTFILESIZE=1000
