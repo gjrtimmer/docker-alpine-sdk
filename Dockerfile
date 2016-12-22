@@ -18,7 +18,7 @@ RUN apk update && \
 				bash-completion \
 				alpine-sdk && \
 	adduser -D sdk && \
-	passwd --delete sdk && \
+	passwd -d sdk && \
 	echo "sdk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	chmod g+w /var/cache/distfiles/ && \
