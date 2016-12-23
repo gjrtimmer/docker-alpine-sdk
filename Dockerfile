@@ -23,7 +23,10 @@ RUN apk update && \
 	chmod 600 /etc/sudoers.d/apk && \
 	chmod g+w /var/cache/distfiles/ && \
 	addgroup sdk abuild && \
-	sed "s|local size=\$(du|local size=\$(sync\;du|" -i /usr/bin/abuild
+	sed "s|local size=\$(du|local size=\$(sync\;du|" -i /usr/bin/abuild && \
+	apk add tzdata && \
+	cp /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
+	apk del tzdata
 	
 USER sdk
 WORKDIR /home/sdk
