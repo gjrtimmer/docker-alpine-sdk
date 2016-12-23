@@ -22,7 +22,8 @@ RUN apk update && \
 	echo "sdk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
 	chmod 600 /etc/sudoers.d/apk && \
 	chmod g+w /var/cache/distfiles/ && \
-	addgroup sdk abuild
+	addgroup sdk abuild && \
+	sed "s|local size=\$(du|local size=\$(sync\;du|" -i /usr/bin/abuild
 	
 USER sdk
 WORKDIR /home/sdk
