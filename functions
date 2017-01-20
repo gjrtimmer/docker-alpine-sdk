@@ -20,3 +20,8 @@ HISTSIZE=1000
 
 bind '"\e[1~": beginning-of-line' &> /dev/null
 bind '"\e[4~": end-of-line' &> /dev/null
+
+# Update APK
+sudo apk update
+
+# EOF
