@@ -32,6 +32,7 @@ USER sdk
 WORKDIR /home/sdk
 
 COPY ./init /init
+COPY ./boot /etc/profile.d/boot.sh
 COPY ./functions /etc/profile.d/functions.sh
 ENTRYPOINT ["/init"]
 CMD ["/bin/bash"]
