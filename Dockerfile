@@ -16,7 +16,8 @@ RUN apk update && \
 	apk add --update --no-cache \
 				bash \
 				bash-completion \
-				alpine-sdk && \
+				alpine-sdk \
+				diffutils && \
 	adduser -D sdk && \
 	passwd -d sdk && \
 	echo "sdk ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/apk && \
