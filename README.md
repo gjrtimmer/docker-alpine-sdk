@@ -11,5 +11,5 @@ Alpine SDk for building packages
 # Usage
 
 ```bash
-docker run --name alpine-sdk --hosthome sdk -e GITHUB_USER=<GITHUB_USERNAME> -it datacore/alpine-sdk sh --login
+docker run --name alpine-sdk --hostname sdk -e GITHUB_USER=<GITHUB_USERNAME> -it datacore/alpine-sdk sh --login
 ```
