@@ -6,7 +6,7 @@
 
 # docker/alpine-sdk
 
-Alpine SDk for building packages
+Alpine SDK for building packages
 
 # Usage
 
