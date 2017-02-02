@@ -36,4 +36,4 @@ COPY ./init /init
 COPY ./boot /etc/profile.d/boot.sh
 COPY ./functions /etc/profile.d/functions.sh
 ENTRYPOINT ["/init"]
-CMD ["/bin/bash"]
+CMD ["/bin/bash", "--login"]
