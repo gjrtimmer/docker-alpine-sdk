@@ -2,6 +2,7 @@ ARG DOCKER_PROXY
 FROM ${DOCKER_PROXY}/alpine:edge
 
 RUN apk update && \
+	apk upgrade --no-cache --force-overwrite && \
 	apk add --update --no-cache --force-overwrite \
 	bash \
 	bash-completion \
