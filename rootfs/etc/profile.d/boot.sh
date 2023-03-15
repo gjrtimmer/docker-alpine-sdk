@@ -2,6 +2,6 @@
 
 # Update APK
 sudo apk update
-sudo apk upgrade
+sudo apk upgrade --force-overwrite --no-cache --prune --purge
 
-# EOF
+echo "Upgrade complete"
