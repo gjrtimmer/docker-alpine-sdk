@@ -11,8 +11,6 @@ include:
 ################################################################################
 .build:
   stage: build
-  variables:
-    ALPINE_VERSION: "3.17"
   script:
     - docker build --pull
       --build-arg VCS_REF="${CI_COMMIT_SHORT_SHA}"
