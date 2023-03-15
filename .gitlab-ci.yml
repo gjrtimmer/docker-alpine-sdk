@@ -1,9 +1,5 @@
 image: registry.timmertech.nl/docker/docker:latest
 
-stages:
-  - build
-  - deploy
-
 include:
   - project: templates/ci
     file: docker.yml
@@ -37,7 +33,7 @@ include:
 build:
   extends: .build
   only:
-    - master
+    - main
     - schedules
 
 dockerhub:
@@ -46,5 +42,5 @@ dockerhub:
   variables:
     DOCKERHUB_IMAGE: ${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${CI_PROJECT_NAME}:latest
   only:
-    - master
+    - main
     - schedules
