@@ -40,3 +40,11 @@ dockerhub:
   only:
     - main
     - schedules
+
+deploy:
+  stage: deploy
+  only:
+    - main
+    - schedules
+  trigger:
+    project: datacore/alpine-sdk
