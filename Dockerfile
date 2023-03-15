@@ -2,10 +2,11 @@ ARG DOCKER_PROXY
 FROM ${DOCKER_PROXY}/alpine:edge
 
 RUN apk update && \
-	apk add --update --no-cache \
+	apk add --update --no-cache --force-overwrite \
 	bash \
 	bash-completion \
 	alpine-sdk \
+	sudo \
 	diffutils && \
 	adduser -D sdk && \
 	passwd -d sdk && \
