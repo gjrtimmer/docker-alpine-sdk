@@ -1,68 +1,50 @@
+image: registry.timmertech.nl/docker/docker:latest
+
 stages:
   - build
   - deploy
-  - clean
-  
-build:latest:
+
+include:
+  - project: templates/ci
+    file: docker.yml
+  - project: templates/ci
+    file: docker-hub.yml
+
+################################################################################
+# Template(s)
+################################################################################
+.build:
   stage: build
-  tags: 
-    - shell
+  interruptible: true
+  variables:
+    ALPINE_VERSION: "3.17"
+  script:
+    - docker build --pull
+      --build-arg VCS_REF="${CI_COMMIT_SHORT_SHA}"
+      --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
+      --build-arg CI_PROJECT_NAME="${CI_PROJECT_NAME}"
+      --build-arg CI_PROJECT_URL="${CI_PROJECT_URL}"
+      --build-arg DOCKER_IMAGE="${DOCKER_IMAGE}"
+      --build-arg ALPINE_VERSION="${ALPINE_VERSION}"
+      --build-arg DOCKER_PROXY=${DOCKER_PROXY_HOST}
+      --file=${DOCKER_FILE}
+      --tag=${DOCKER_IMAGE} .
+    - docker push ${DOCKER_IMAGE}
+
+################################################################################
+# Job Configuration
+################################################################################
+build:
+  extends: .build
   only:
     - master
-  script:
-    - docker build --pull --force-rm=true 
-        --build-arg VCS_REF=`git rev-parse --short HEAD` 
-        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-        --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:latest .
+    - schedules
 
-build:branches:
-  stage: build
-  tags: 
-    - shell
-  except:
-    - master
-  script:
-    - docker build --pull --force-rm=true 
-        --build-arg VCS_REF=`git rev-parse --short HEAD` 
-        --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` 
-        --tag=$(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME} .
-
-deploy:latest:
+dockerhub:
   stage: deploy
-  tags:
-    - shell
+  extends: .dockerhub
+  variables:
+    DOCKERHUB_IMAGE: ${DOCKERHUB_REGISTRY}/${DOCKERHUB_NAMESPACE}/${CI_PROJECT_NAME}:latest
   only:
     - master
-  script:
-    - docker push $(cat REPOSITORY)/${CI_PROJECT_PATH}:latest
-    
-deploy:branches:
-  stage: deploy
-  tags:
-    - shell
-  except:
-    - master
-  script:
-    - docker push $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}
-   
-clean:latest:
-  stage: clean
-  tags:
-    - shell
-  only:
-    - master
-  script:
-    -   if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}) ]; then 
-            docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH};
-        fi
-
-clean:branches:
-  stage: clean
-  tags:
-    - shell
-  except:
-    - master
-  script:
-    -   if [ ! -z $(docker images -q $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME}) ]; then 
-            docker rmi $(cat REPOSITORY)/${CI_PROJECT_PATH}:${CI_BUILD_REF_NAME};
-        fi
+    - schedules
